@@ -35,6 +35,7 @@
 
 /// -- std headers
 #include <sys/utsname.h>
+#include <sys/time.h>
 #include <unistd.h>
 #include <algorithm>
 
@@ -241,7 +242,8 @@ void DQMMonitorElementCollector::reset()
 
 StatusCode DQMMonitorElementCollector::handleMEPacketReception(DimCommand *pCommand)
 {
-	std::clock_t start = std::clock();
+	struct timeval tpstart;
+	gettimeofday(&tpstart, NULL);
 
 	try
 	{
@@ -309,7 +311,9 @@ StatusCode DQMMonitorElementCollector::handleMEPacketReception(DimCommand *pComm
 		return exception.getStatusCode();
 	}
 
-	m_receptionTimerValue = 1000.0*(std::clock() - start)/CLOCKS_PER_SEC;
+	struct timeval tpend;
+	gettimeofday(&tpend, NULL);
+	m_receptionTimerValue = (tpend.tv_sec - tpstart.tv_sec) * (uint64_t)1000 + (tpend.tv_usec - tpstart.tv_usec)/ 1000.f;
 	m_pReceptionTimerService->updateService(m_receptionTimerValue);
 
 	return STATUS_CODE_SUCCESS;
@@ -422,7 +426,8 @@ DQMMonitorElementPacketRpc::DQMMonitorElementPacketRpc(char *rpcName, DQMMonitor
 
 void DQMMonitorElementPacketRpc::rpcHandler()
 {
-	std::clock_t start = std::clock();
+	struct timeval tpstart;
+	gettimeofday(&tpstart, NULL);
 
 	try
 	{
@@ -502,7 +507,9 @@ void DQMMonitorElementPacketRpc::rpcHandler()
 	{
 	}
 
-	m_pCollector->m_queryTimerValue = 1000.f*(std::clock() - start)/CLOCKS_PER_SEC;
+	struct timeval tpend;
+	gettimeofday(&tpend, NULL);
+	m_pCollector->m_queryTimerValue = (tpend.tv_sec - tpstart.tv_sec) * (uint64_t)1000 + (tpend.tv_usec - tpstart.tv_usec)/ 1000.f;
 	m_pCollector->m_pQueryTimerService->updateService(m_pCollector->m_queryTimerValue);
 }
 

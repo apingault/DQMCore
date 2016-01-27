@@ -32,6 +32,8 @@
 // -- dim headers
 #include "dic.hxx"
 
+#include <sys/time.h>
+
 namespace dqm4hep
 {
 
@@ -66,7 +68,8 @@ void DQMMonitorElementSender::setCollectorName(const std::string &collectorName)
 
 StatusCode DQMMonitorElementSender::sendMonitorElements(const std::string &moduleName, const DQMMonitorElementList &monitorElementList)
 {
-	std::clock_t start = std::clock();
+	struct timeval tpstart;
+	gettimeofday(&tpstart, NULL);
 
 	if(moduleName.empty() || monitorElementList.empty())
 		return STATUS_CODE_INVALID_PARAMETER;
@@ -90,7 +93,9 @@ StatusCode DQMMonitorElementSender::sendMonitorElements(const std::string &modul
 
 	DimClient::sendCommandNB(commandName.c_str(), (void *)pBuffer, bufferSize);
 
-	m_timerValue = 1000.f*(std::clock() - start)/CLOCKS_PER_SEC;
+	struct timeval tpend;
+	gettimeofday(&tpend, NULL);
+	m_timerValue = (tpend.tv_sec - tpstart.tv_sec) * (uint64_t)1000 + (tpend.tv_usec - tpstart.tv_usec)/ 1000.f;
 	m_pSendMeTimerService->updateService(m_timerValue);
 
 	return STATUS_CODE_SUCCESS;

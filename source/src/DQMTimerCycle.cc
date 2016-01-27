@@ -38,6 +38,8 @@
 #include "TSystem.h"
 #include "TTime.h"
 
+#include <sys/time.h>
+
 namespace dqm4hep
 {
 
@@ -131,11 +133,15 @@ StatusCode DQMTimerCycle::processCycle()
 
 		if(NULL != pEvent)
 		{
-			std::clock_t start = std::clock();
+			struct timeval tpstart;
+			gettimeofday(&tpstart, NULL);
 
 			RETURN_RESULT_IF(STATUS_CODE_SUCCESS, !=, pModule->processEvent(pEvent));
 
-			m_timerValue = 1000.0*(std::clock() - start)/CLOCKS_PER_SEC;
+
+			struct timeval tpend;
+			gettimeofday(&tpend, NULL);
+			m_timerValue = (tpend.tv_sec - tpstart.tv_sec) * (uint64_t)1000 + (tpend.tv_usec - tpstart.tv_usec)/ 1000.f;
 			m_pProcessEventTimerService->updateService(m_timerValue);
 
 			delete pEvent;

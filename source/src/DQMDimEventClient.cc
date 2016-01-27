@@ -30,6 +30,8 @@
 #include "dqm4hep/DQMDataStream.h"
 #include "dqm4hep/DQMEventStreamer.h"
 
+#include <sys/time.h>
+
 namespace dqm4hep
 {
 
@@ -202,7 +204,8 @@ bool DQMDimEventClient::isConnectedToService() const
 
 StatusCode DQMDimEventClient::sendEvent(const DQMEvent *const pEvent)
 {
-	std::clock_t start = std::clock();
+	struct timeval tpstart;
+	gettimeofday(&tpstart, NULL);
 
 	pthread_mutex_lock(&m_mutex);
 
@@ -249,7 +252,9 @@ StatusCode DQMDimEventClient::sendEvent(const DQMEvent *const pEvent)
 		m_pSendEventTimerService = new DQMPerformanceService(this->getCollectorName() + "/SEND_EVENT_TO_COLLECTOR_TIMER", m_timerValue);
 
 
-	m_timerValue = 1000.f * (clock() - start) / CLOCKS_PER_SEC;
+	struct timeval tpend;
+	gettimeofday(&tpend, NULL);
+	m_timerValue = (tpend.tv_sec - tpstart.tv_sec) * (uint64_t)1000 + (tpend.tv_usec - tpstart.tv_usec)/ 1000.f;
 	m_pSendEventTimerService->updateService(m_timerValue);
 
 	return STATUS_CODE_SUCCESS;

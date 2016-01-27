@@ -30,6 +30,8 @@
 #include "dqm4hep/DQMEventStreamer.h"
 #include "dqm4hep/DQMDataStream.h"
 
+#include <sys/time.h>
+
 namespace dqm4hep
 {
 
@@ -204,7 +206,8 @@ DQMEventStreamer *DQMDimEventCollector::getEventStreamer() const
 
 void DQMDimEventCollector::handleEventReception(DimCommand *pDimCommand)
 {
-	std::clock_t start = std::clock();
+	struct timeval tpstart;
+	gettimeofday(&tpstart, NULL);
 
 	dqm_char *pBuffer = static_cast<char*>(pDimCommand->getData());
 	dqm_uint bufferSize = pDimCommand->getSize();
@@ -244,13 +247,16 @@ void DQMDimEventCollector::handleEventReception(DimCommand *pDimCommand)
 		return;
 	}
 
-	m_receptionTimerValue = 1000.0*(std::clock() - start)/CLOCKS_PER_SEC;
+	struct timeval tpend;
+	gettimeofday(&tpend, NULL);
+	m_receptionTimerValue = (tpend.tv_sec - tpstart.tv_sec) * (uint64_t)1000 + (tpend.tv_usec - tpstart.tv_usec)/ 1000.f;
 	m_pEventReceptionTimerService->updateService(m_receptionTimerValue);
 
-	start = std::clock();
+	gettimeofday(&tpstart, NULL);
 	this->updateEventService();
 
-	m_updateTimerValue = 1000.0*(std::clock() - start)/CLOCKS_PER_SEC;
+	gettimeofday(&tpend, NULL);
+	m_updateTimerValue = (tpend.tv_sec - tpstart.tv_sec) * (uint64_t)1000 + (tpend.tv_usec - tpstart.tv_usec)/ 1000.f;
 	m_pUpdateEventTimerService->updateService(m_updateTimerValue);
 }
 
