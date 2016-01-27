@@ -31,6 +31,7 @@
 // -- dqm4hep headers
 #include "dqm4hep/DQMEventCollectorImp.h"
 #include "dqm4hep/DQMStatisticsService.h"
+#include "dqm4hep/DQMPerformance.h"
 #include "dqm4hep/DQMDataStream.h"
 
 // -- dim headers
@@ -181,6 +182,12 @@ private:
 	DQMEvent                *m_pCurrentEvent;
 
 	ClientMap                m_clientMap;
+
+	DQMPerformanceService       *m_pEventReceptionTimerService;
+	float                        m_receptionTimerValue;
+
+	DQMPerformanceService       *m_pUpdateEventTimerService;
+	float                        m_updateTimerValue;
 }; 
 
 } 

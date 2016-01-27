@@ -114,7 +114,11 @@ DQMMonitorElementCollector::DQMMonitorElementCollector() :
 		m_pMonitorElementPacketRpc(NULL),
 		m_pMonitorElementCollectorInfoRpc(NULL),
 		m_pCommandHandler(NULL),
-		m_dataStream(5*1024*1024)
+		m_dataStream(5*1024*1024),
+		m_receptionTimerValue(0.f),
+		m_pReceptionTimerService(0),
+		m_queryTimerValue(0.f),
+		m_pQueryTimerService(0)
 {
 	/* nop */
 }
@@ -175,6 +179,9 @@ StatusCode DQMMonitorElementCollector::start()
 
 	m_pCommandHandler = new DQMCollectorCommandHandler(this);
 
+	m_pReceptionTimerService = new DQMPerformanceService(this->getCollectorName() + "/ME_RECEPTION_TIMER", m_receptionTimerValue);
+	m_pQueryTimerService = new DQMPerformanceService(this->getCollectorName() + "/ME_QUERY_TIMER", m_queryTimerValue);
+
 	return STATUS_CODE_SUCCESS;
 }
 
@@ -190,6 +197,9 @@ StatusCode DQMMonitorElementCollector::stop()
 	delete m_pMonitorElementPacketRpc;
 	delete m_pMonitorElementCollectorInfoRpc;
 	delete m_pStatisticsService;
+
+	delete m_pReceptionTimerService;
+	delete m_pQueryTimerService;
 
 	m_collectorState = STOPPED_STATE;
 
@@ -231,6 +241,8 @@ void DQMMonitorElementCollector::reset()
 
 StatusCode DQMMonitorElementCollector::handleMEPacketReception(DimCommand *pCommand)
 {
+	std::clock_t start = std::clock();
+
 	try
 	{
 		char *pBuffer = static_cast<char *>(pCommand->getData());
@@ -296,6 +308,9 @@ StatusCode DQMMonitorElementCollector::handleMEPacketReception(DimCommand *pComm
 	{
 		return exception.getStatusCode();
 	}
+
+	m_receptionTimerValue = 1000.0*(std::clock() - start)/CLOCKS_PER_SEC;
+	m_pReceptionTimerService->updateService(m_receptionTimerValue);
 
 	return STATUS_CODE_SUCCESS;
 }
@@ -407,6 +422,8 @@ DQMMonitorElementPacketRpc::DQMMonitorElementPacketRpc(char *rpcName, DQMMonitor
 
 void DQMMonitorElementPacketRpc::rpcHandler()
 {
+	std::clock_t start = std::clock();
+
 	try
 	{
 		if(!m_pCollector->isRunning())
@@ -484,6 +501,9 @@ void DQMMonitorElementPacketRpc::rpcHandler()
 	catch(...)
 	{
 	}
+
+	m_pCollector->m_queryTimerValue = 1000.f*(std::clock() - start)/CLOCKS_PER_SEC;
+	m_pCollector->m_pQueryTimerService->updateService(m_pCollector->m_queryTimerValue);
 }
 
 //-------------------------------------------------------------------------------------------------

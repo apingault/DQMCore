@@ -47,16 +47,20 @@ DQMTimerCycle aTimerCycle;
 //-------------------------------------------------------------------------------------------------
 
 DQMTimerCycle::DQMTimerCycle() :
-		DQMCycle("TimerCycle")
+		DQMCycle("TimerCycle"),
+		m_pProcessEventTimerService(0),
+		m_timerValue(0.f)
 {
 	setCycleValue(30.f);
+
 }
 
 //-------------------------------------------------------------------------------------------------
 
 DQMTimerCycle::~DQMTimerCycle() 
 {
-	/* nop */
+	if(m_pProcessEventTimerService)
+		delete m_pProcessEventTimerService;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -78,6 +82,9 @@ StatusCode DQMTimerCycle::processCycle()
 
 	if(!pModule)
 		return STATUS_CODE_INVALID_PARAMETER;
+
+	if(!m_pProcessEventTimerService)
+		m_pProcessEventTimerService = new DQMPerformanceService(pModule->getName() + "/PROCESS_EVENT_TIMER", m_timerValue);
 
 	streamlog_out(MESSAGE) << "DQMTimerCycle: Start of cycle !!" << std::endl;
 
@@ -124,7 +131,13 @@ StatusCode DQMTimerCycle::processCycle()
 
 		if(NULL != pEvent)
 		{
+			std::clock_t start = std::clock();
+
 			RETURN_RESULT_IF(STATUS_CODE_SUCCESS, !=, pModule->processEvent(pEvent));
+
+			m_timerValue = 1000.0*(std::clock() - start)/CLOCKS_PER_SEC;
+			m_pProcessEventTimerService->updateService(m_timerValue);
+
 			delete pEvent;
 			nProcessedEvents ++;
 			startTimeout = gSystem->Now();

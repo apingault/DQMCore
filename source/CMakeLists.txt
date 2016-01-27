@@ -130,6 +130,17 @@ INSTALL (
     RUNTIME DESTINATION bin
 )
 
+# -------------------------------------------------
+# build run performance analysis executable
+
+ADD_EXECUTABLE( dqm4hep_run_performance_analysis main/dqm4hep_run_performance_analysis.cc )
+TARGET_LINK_LIBRARIES( dqm4hep_run_performance_analysis ${PROJECT_NAME} ${ROOT_GUI_LIBRARY} ${ROOT_GRAPH_LIBRARY} ${ROOT_HIST_LIBRARY} ${ROOT_CINT_LIBRARY} )
+
+INSTALL (
+    TARGETS dqm4hep_run_performance_analysis
+    RUNTIME DESTINATION bin
+)
+
 
 # -------------------------------------------------
 # build db insert config file executable

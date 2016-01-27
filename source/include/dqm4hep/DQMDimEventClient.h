@@ -35,6 +35,7 @@
 #include "dqm4hep/DQMEventClientImp.h"
 #include "dqm4hep/DQMStreamer.h"
 #include "dqm4hep/DQMDataStream.h"
+#include "dqm4hep/DQMPerformance.h"
 
 #include "dic.hxx"
 
@@ -201,6 +202,9 @@ private:
 	int                          m_serverClientId;
 	bool                         m_updateMode;
 	std::string                   m_subEventIdentifier;
+
+	DQMPerformanceService       *m_pSendEventTimerService;
+	float                        m_timerValue;
 
 	// thread mutex
 	mutable pthread_mutex_t      m_mutex;

@@ -134,6 +134,14 @@ int main(int argc, char* argv[])
 	pListener->setEventClient(pEventClient);
 	pListener->setSleepTime(sleepTimeArg.getValue());
 
+	char serverName [] = "/tmp/LCIOFileServiceXXXXXX";
+	int ret = mkstemp(serverName);
+
+	if(ret < 0)
+		exit(1);
+
+	DimServer::start( serverName );
+
 	while(1)
 	{
 		try

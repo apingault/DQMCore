@@ -37,9 +37,19 @@ namespace dqm4hep
 
 DQMMonitorElementSender::DQMMonitorElementSender() :
 		m_collectorName("DEFAULT"),
-		m_dataStream(4*1024*1024) // 4 Mo to start
+		m_dataStream(4*1024*1024), // 4 Mo to start
+		m_timerValue(0.f),
+		m_pSendMeTimerService(0)
 {
 	/* nop */
+}
+
+//-------------------------------------------------------------------------------------------------
+
+DQMMonitorElementSender::~DQMMonitorElementSender()
+{
+	if(m_pSendMeTimerService)
+		delete m_pSendMeTimerService;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -56,8 +66,13 @@ void DQMMonitorElementSender::setCollectorName(const std::string &collectorName)
 
 StatusCode DQMMonitorElementSender::sendMonitorElements(const std::string &moduleName, const DQMMonitorElementList &monitorElementList)
 {
+	std::clock_t start = std::clock();
+
 	if(moduleName.empty() || monitorElementList.empty())
 		return STATUS_CODE_INVALID_PARAMETER;
+
+	if(!m_pSendMeTimerService)
+		m_pSendMeTimerService = new DQMPerformanceService(moduleName + "/SEND_ME_TO_COLLECTOR", m_timerValue);
 
 	DQMMonitorElementPublication publication;
 	publication.m_publication[moduleName] = monitorElementList;
@@ -74,6 +89,9 @@ StatusCode DQMMonitorElementSender::sendMonitorElements(const std::string &modul
 	commandName += "MONITOR_ELEMENT_PACKET_RECEPTION";
 
 	DimClient::sendCommandNB(commandName.c_str(), (void *)pBuffer, bufferSize);
+
+	m_timerValue = 1000.f*(std::clock() - start)/CLOCKS_PER_SEC;
+	m_pSendMeTimerService->updateService(m_timerValue);
 
 	return STATUS_CODE_SUCCESS;
 }

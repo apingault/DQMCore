@@ -31,6 +31,7 @@
 
 // -- dqm4hep headers
 #include "dqm4hep/DQMCycle.h"
+#include "dqm4hep/DQMPerformance.h"
 
 namespace dqm4hep
 {
@@ -57,6 +58,11 @@ public:
 	/** Allocate a clone of this cycle
 	 */
 	DQMPlugin *clone() const;
+
+private:
+
+	float                      m_timerValue;
+	DQMPerformanceService     *m_pProcessEventTimerService;
 }; 
 
 } 

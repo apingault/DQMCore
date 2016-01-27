@@ -32,6 +32,7 @@
 #include "dqm4hep/DQM4HEP.h"
 #include "dqm4hep/DQMPath.h"
 #include "dqm4hep/DQMDataStream.h"
+#include "dqm4hep/DQMPerformance.h"
 
 // -- dim headers
 #include "dis.hxx"
@@ -205,6 +206,12 @@ private:
 	// storage
 	DQMMonitorElementListMap           m_monitorElementListMap;
 	DQMDataStream                      m_dataStream;    ///< To deserialize incoming monitor elements from modules
+
+	float                              m_receptionTimerValue;
+	DQMPerformanceService             *m_pReceptionTimerService;
+
+	float                              m_queryTimerValue;
+	DQMPerformanceService             *m_pQueryTimerService;
 
 	friend class DQMCollectorCommandHandler;
 	friend class DQMMonitorElementNameListRpc;

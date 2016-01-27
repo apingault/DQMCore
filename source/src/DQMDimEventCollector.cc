@@ -44,7 +44,6 @@ DimEventRequestRpc::DimEventRequestRpc(DQMDimEventCollector *pCollector) :
 
 void DimEventRequestRpc::rpcHandler()
 {
-	std::cout << "Event request rpc !" << std::endl;
 	m_pCollector->handleEventRequest(this);
 }
 
@@ -59,13 +58,13 @@ DQMDimEventCollector::DQMDimEventCollector() :
 		m_pUpdateModeCommand(NULL),
 		m_pEventUpdateService(NULL),
 		m_pEventStreamer(NULL),
-//		m_pCurrentBuffer(NULL),
-//		m_currentBufferSize(0),
 		m_pCurrentEvent(NULL),
 		m_state(0),
 		m_clientRegisteredId(0),
 		m_dataStream(5*1024*1024),
-		m_subEventDataStream(5*1024*1024)
+		m_subEventDataStream(5*1024*1024),
+		m_receptionTimerValue(0.f),
+		m_updateTimerValue(0.f)
 {
 	THROW_RESULT_IF(STATUS_CODE_SUCCESS, !=, m_dataStream.write(std::string("EMPTY")));
 	DimServer::addClientExitHandler(this);
@@ -130,6 +129,10 @@ StatusCode DQMDimEventCollector::startCollector()
 	m_pClientRegisteredService = new DimService(("DQM4HEP/EventCollector/" + getCollectorName() + "/CLIENT_REGISTERED").c_str(), m_clientRegisteredId);
 	m_pServerStateService = new DimService(("DQM4HEP/EventCollector/" + getCollectorName() + "/SERVER_STATE").c_str(), m_state);
 
+	// performances
+	m_pEventReceptionTimerService = new DQMPerformanceService(getCollectorName() + "/EVENT_RECEPTION_TIMER", m_receptionTimerValue);
+	m_pUpdateEventTimerService = new DQMPerformanceService(getCollectorName() + "/EVENT_UPDATE_TIMER", m_updateTimerValue);
+
 	// inform clients that the server is available for registrations
 	streamlog_out(MESSAGE) << "Changing server application to running !" << std::endl;
 
@@ -167,6 +170,9 @@ StatusCode DQMDimEventCollector::stopCollector()
 	delete m_pClientRegisteredService;
 	delete m_pServerStateService;
 
+	delete m_pEventReceptionTimerService;
+	delete m_pUpdateEventTimerService;
+
 	delete m_pEventRequestRpc;
 
 	m_dataStream.reset();
@@ -198,6 +204,8 @@ DQMEventStreamer *DQMDimEventCollector::getEventStreamer() const
 
 void DQMDimEventCollector::handleEventReception(DimCommand *pDimCommand)
 {
+	std::clock_t start = std::clock();
+
 	dqm_char *pBuffer = static_cast<char*>(pDimCommand->getData());
 	dqm_uint bufferSize = pDimCommand->getSize();
 
@@ -236,7 +244,14 @@ void DQMDimEventCollector::handleEventReception(DimCommand *pDimCommand)
 		return;
 	}
 
+	m_receptionTimerValue = 1000.0*(std::clock() - start)/CLOCKS_PER_SEC;
+	m_pEventReceptionTimerService->updateService(m_receptionTimerValue);
+
+	start = std::clock();
 	this->updateEventService();
+
+	m_updateTimerValue = 1000.0*(std::clock() - start)/CLOCKS_PER_SEC;
+	m_pUpdateEventTimerService->updateService(m_updateTimerValue);
 }
 
 //-------------------------------------------------------------------------------------------------

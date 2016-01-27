@@ -92,7 +92,9 @@ DQMDimEventClient::DQMDimEventClient() :
 	m_pEventStreamer(NULL),
 	m_updateMode(false),
 	m_serverClientId(0),
-	m_dataStream(5*1024*1024) // 5 Mo should be enough to start ...
+	m_dataStream(5*1024*1024), // 5 Mo should be enough to start ...
+	m_timerValue(0.f),
+	m_pSendEventTimerService(0)
 {
 	pthread_mutex_init(&m_mutex, NULL);
 }
@@ -108,6 +110,9 @@ DQMDimEventClient::~DQMDimEventClient()
 		delete m_pEventStreamer;
 
 	pthread_mutex_destroy(&m_mutex);
+
+	if(m_pSendEventTimerService)
+		delete m_pSendEventTimerService;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -197,6 +202,8 @@ bool DQMDimEventClient::isConnectedToService() const
 
 StatusCode DQMDimEventClient::sendEvent(const DQMEvent *const pEvent)
 {
+	std::clock_t start = std::clock();
+
 	pthread_mutex_lock(&m_mutex);
 
 	if(NULL == m_pEventStreamer)
@@ -237,6 +244,13 @@ StatusCode DQMDimEventClient::sendEvent(const DQMEvent *const pEvent)
 	DimClient::sendCommandNB((char*) commandName.c_str(), (void *) pBuffer, bufferSize);
 
 	pthread_mutex_unlock(&m_mutex);
+
+	if(!m_pSendEventTimerService)
+		m_pSendEventTimerService = new DQMPerformanceService(this->getCollectorName() + "/SEND_EVENT_TO_COLLECTOR_TIMER", m_timerValue);
+
+
+	m_timerValue = 1000.f * (clock() - start) / CLOCKS_PER_SEC;
+	m_pSendEventTimerService->updateService(m_timerValue);
 
 	return STATUS_CODE_SUCCESS;
 }
