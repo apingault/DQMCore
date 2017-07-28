@@ -66,7 +66,7 @@ public:
 	 *  is the second arguement is set to true
 	 */
 	template <typename T>
-	void setEvent(T *pEvent, bool isOwner = true);
+	void setEvent(T *pEvent, bool isEventOwner = true);
 
 	/** Clear the event (normally delete the event structure)
 	 */
@@ -150,7 +150,7 @@ inline T *DQMEvent::getEvent() const
 //-------------------------------------------------------------------------------------------------
 
 template <typename T>
-inline void DQMEvent::setEvent(T *pEvent, bool isOwner)
+inline void DQMEvent::setEvent(T *pEvent, bool isEventOwner)
 {
 	DQMEventBase<T> *pBaseEvent = dynamic_cast<DQMEventBase<T>*>(this);
 
@@ -158,7 +158,7 @@ inline void DQMEvent::setEvent(T *pEvent, bool isOwner)
 		return;
 
 	pBaseEvent->setEvent(pEvent);
-	m_isOwner = isOwner;
+	m_isOwner = isEventOwner;
 }
 
 //-------------------------------------------------------------------------------------------------
