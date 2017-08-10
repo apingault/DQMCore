@@ -5,23 +5,30 @@
 #  Mongoose_FOUND             - have mongoose been found
 #  Mongoose_INCLUDE_DIR       - path to where mongoose/Server.h is found
 #  Mongoose_LIBRARY           - name of library (project) to add as dependency
-FIND_PATH(Mongoose_INCLUDE_DIR
+UNSET(Mongoose_INCLUDE_DIR CACHE)
+UNSET(Mongoose_INCLUDE_DIRS CACHE)
+
+SET (Mongoose_INCLUDE_HINTS HINTS "${Mongoose_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/include")
+SET (Mongoose_LIBRARY_HINTS HINTS "${Mongoose_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/lib")
+
+FIND_PATH(Mongoose_INCLUDE_DIRS
 	NAMES mongoose/Server.h
-	PATHS
-		${CMAKE_SOURCE_DIR}/mongoose-cpp
-		${Mongoose_DIR}
-		${Mongoose_INCLUDE_DIR}
-		${NSCP_INCLUDEDIR}
+	PATHS ${Mongoose_INCLUDE_HINTS}
 )
 
-IF(Mongoose_INCLUDE_DIR)
+FIND_LIBRARY (
+    Mongoose_LIBRARY
+    NAMES libMongoose${CMAKE_SHARED_LIBRARY_SUFFIX}
+    PATHS ${Mongoose_LIBRARY_HINTS}		
+)
+
+IF(Mongoose_INCLUDE_DIRS AND Mongoose_LIBRARY)
 	SET(Mongoose_FOUND TRUE)
-	SET(Mongoose_LIBRARY _mongoose)
-ELSE(Mongoose_INCLUDE_DIR)
+	SET(Mongoose_LIBRARIES ${Mongoose_LIBRARY})
+ELSE(Mongoose_INCLUDE_DIRS AND Mongoose_LIBRARY)
 	SET(Mongoose_FOUND FALSE)
-	SET(Mongoose_LIBRARY)
-ENDIF(Mongoose_INCLUDE_DIR)
+ENDIF(Mongoose_INCLUDE_DIRS AND Mongoose_LIBRARY)
 MARK_AS_ADVANCED(
-  Mongoose_INCLUDE_DIR
-  Mongoose_LIBRARY
+  Mongoose_INCLUDE_DIRS
+  Mongoose_LIBRARIES
 )
