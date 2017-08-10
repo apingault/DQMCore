@@ -69,7 +69,9 @@ FIND_PACKAGE( xdrstream REQUIRED )
 FIND_PACKAGE( LOG4CXX REQUIRED )
 
 # ----- Find Mongoose package -----
-FIND_PACKAGE( Mongoose QUIET )
+IF ( NOT Mongoose_DIR )
+  FIND_PACKAGE( Mongoose QUIET )
+ENDIF()
 
 IF( MONGOOSE_FOUND )
 	MESSAGE( STATUS "Check for Mongoose_INCLUDE_DIRS : ${Mongoose_INCLUDE_DIRS} -- ok" )
