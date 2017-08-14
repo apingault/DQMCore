@@ -65,7 +65,7 @@ DQMDimEventClient::DQMDimEventClient() :
 {
 	pthread_mutex_init(&m_mutex, NULL);
 
-	m_pWriteBuffer = new xdrstream::BufferDevice(5*1024*1024);
+	m_pWriteBuffer = new xdrstream::BufferDevice(100*1024*1024);
 }
 
 //-------------------------------------------------------------------------------------------------
