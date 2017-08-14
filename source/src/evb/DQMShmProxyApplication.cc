@@ -486,6 +486,7 @@ void DQMShmProxyApplication::processEvent(uint32_t key, std::vector<levbdim::buf
 
 		for( auto iter = m_eventClientList.begin(), endIter = m_eventClientList.end() ; endIter != iter ; ++iter )
 		{
+		  std::cout << "Sending event to collector : " << (*iter)->getCollectorName() << std::endl;
 			THROW_RESULT_IF(STATUS_CODE_SUCCESS, !=, (*iter)->sendEvent(pEvent));
 		}
 	}
@@ -503,6 +504,8 @@ void DQMShmProxyApplication::processEvent(uint32_t key, std::vector<levbdim::buf
 	}
 
 	delete pEvent;
+
+	std::cout << "evb app : reached end of process event" << std::endl;
 }
 
 } 
