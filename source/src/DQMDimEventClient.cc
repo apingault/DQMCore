@@ -58,6 +58,9 @@ DQM_PLUGIN_DECL( DQMDimEventClient , "DimEventClient" )
 DQMDimEventClient::DQMDimEventClient() :
 	m_isConnected(false),
 	m_pDimEventRpcInfo(NULL),
+	m_pClientIdInfo(NULL),
+	m_pServerStateInfo(NULL),
+	m_pEventUpdateInfo(NULL),
 	m_updateMode(false),
 	m_serverClientId(0),
 	m_pReadBuffer(0),
@@ -125,10 +128,10 @@ StatusCode DQMDimEventClient::performServiceDisconnection()
 	if(!isConnectedToService())
 		return STATUS_CODE_SUCCESS;
 
-	delete m_pDimEventRpcInfo;
-	delete m_pClientIdInfo;
-	delete m_pServerStateInfo;
-	delete m_pEventUpdateInfo;
+	delete m_pDimEventRpcInfo; m_pDimEventRpcInfo = NULL;
+	delete m_pClientIdInfo;    m_pClientIdInfo = NULL;
+	delete m_pServerStateInfo; m_pServerStateInfo = NULL;
+	delete m_pEventUpdateInfo; m_pEventUpdateInfo = NULL;
 
 	m_isConnected = false;
 

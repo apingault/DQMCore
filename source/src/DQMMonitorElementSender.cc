@@ -42,7 +42,9 @@ DQMMonitorElementSender::DQMMonitorElementSender(DQMModuleApplication *pApplicat
 		m_pOutBuffer(0),
 		m_pInBuffer(0),
 		m_sendAvailableMeList(true),
-		m_isConnected(false)
+		m_isConnected(false),
+		m_pSubscribedListInfo(NULL),
+		m_pCollectorStateInfo(NULL)
 {
 	pthread_mutex_init(&m_mutex, NULL);
 
@@ -193,8 +195,8 @@ StatusCode DQMMonitorElementSender::disconnectFromService()
 	if( ! this->isConnectedToService() )
 		return STATUS_CODE_SUCCESS;
 
-	delete m_pSubscribedListInfo;
-	delete m_pCollectorStateInfo;
+	delete m_pSubscribedListInfo; m_pSubscribedListInfo = NULL;
+	delete m_pCollectorStateInfo; m_pCollectorStateInfo = NULL;
 
 	m_isConnected = false;
 

@@ -377,7 +377,20 @@ DQMMonitorElementCollector::DQMMonitorElementCollector() :
 		m_collectorState(STOPPED_STATE),
 		m_pMonitorElementNameListRpc(NULL),
 		m_pMonitorElementCollectorInfoRpc(NULL),
-		m_pInBuffer(NULL)
+		m_pInBuffer(NULL),
+		m_pCollectMeCommand(NULL),
+		m_pAvailableMeListCommand(NULL),
+		m_pMeQueryCommand(NULL),
+		m_pSetUpdateModeCommand(NULL),
+		m_pSubscribeCommand(NULL),
+		m_pUnsubscribeCommand(NULL),
+		m_pSetSubscriptionCommand(NULL),
+		m_pQuerySubscribedCommand(NULL),
+		m_pMeUpdateService(NULL),
+		m_pNotifyWatchedMeService(NULL),
+		m_pCollectorStateService(NULL),
+		m_pAvailableMeService(NULL),
+		m_pStatisticsService(NULL)
 {
 	m_pOutBuffer = new xdrstream::BufferDevice(5*1024*1024);
 }
@@ -506,20 +519,20 @@ StatusCode DQMMonitorElementCollector::stop()
 	if(!isRunning())
 		return STATUS_CODE_SUCCESS;
 
-	delete m_pCollectMeCommand;
-	delete m_pAvailableMeListCommand;
-	delete m_pMeQueryCommand;
-	delete m_pSetUpdateModeCommand;
-	delete m_pSubscribeCommand;
-	delete m_pUnsubscribeCommand;
-	delete m_pSetSubscriptionCommand;
+	delete m_pCollectMeCommand; m_pCollectMeCommand = NULL;
+	delete m_pAvailableMeListCommand; m_pAvailableMeListCommand = NULL;
+	delete m_pMeQueryCommand; m_pMeQueryCommand = NULL;
+	delete m_pSetUpdateModeCommand; m_pSetUpdateModeCommand = NULL;
+	delete m_pSubscribeCommand; m_pSubscribeCommand = NULL;
+	delete m_pUnsubscribeCommand; m_pUnsubscribeCommand = NULL;
+	delete m_pSetSubscriptionCommand; m_pSetSubscriptionCommand = NULL;
 
-	delete m_pMonitorElementNameListRpc;
-	delete m_pMonitorElementCollectorInfoRpc;
-	delete m_pStatisticsService;
-	delete m_pMeUpdateService;
-	delete m_pNotifyWatchedMeService;
-	delete m_pAvailableMeService;
+	delete m_pMonitorElementNameListRpc; m_pMonitorElementNameListRpc = NULL;
+	delete m_pMonitorElementCollectorInfoRpc; m_pMonitorElementCollectorInfoRpc = NULL;
+	delete m_pStatisticsService; m_pStatisticsService = NULL;
+	delete m_pMeUpdateService; m_pMeUpdateService = NULL;
+	delete m_pNotifyWatchedMeService; m_pNotifyWatchedMeService = NULL;
+	delete m_pAvailableMeService; m_pAvailableMeService = NULL;
 
 	m_collectorState = STOPPED_STATE;
 	m_pCollectorStateService->updateService(m_collectorState);

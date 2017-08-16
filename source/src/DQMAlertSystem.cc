@@ -321,7 +321,8 @@ void DQMAlertHandler::notifyListeners(DQMAlertPtr alert)
 DQMDimAlertHandler::DQMDimAlertHandler(const std::string &emitter) :
 		m_emitter(emitter),
 		m_isConnected(false),
-		m_pBuffer(NULL)
+		m_pBuffer(NULL),
+		m_pAlertInfo(NULL)
 {
 	/* nop */
 }
