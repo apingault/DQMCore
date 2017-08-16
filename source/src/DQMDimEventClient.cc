@@ -76,10 +76,14 @@ DQMDimEventClient::DQMDimEventClient() :
 DQMDimEventClient::~DQMDimEventClient() 
 {
 	if( this->isConnectedToService() )
-		this->disconnectFromService();
-
-	pthread_mutex_destroy(&m_mutex);
-
+	{
+		try{
+			this->disconnectFromService();
+		}catch(StatusCodeException &exception){
+			LOG4CXX_WARN( dqmMainLogger , "Failed to disconnect DQMDimEventClient from Service with exception : " << exception.toString() );
+		}
+	}
+	
 	if(m_pReadBuffer)
 		delete m_pReadBuffer;
 

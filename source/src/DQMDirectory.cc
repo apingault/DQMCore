@@ -54,7 +54,11 @@ DQMDirectory::DQMDirectory(const std::string &name, DQMDirectory *pParentDir) :
 
 DQMDirectory::~DQMDirectory()
 {
-	clear();
+	try{
+		clear();
+	}catch(StatusCodeException &exception){
+		LOG4CXX_WARN( dqmMainLogger , "Failed to clear directory with exception : " << exception.toString() );
+	}
 }
 
 //-------------------------------------------------------------------------------------------------
