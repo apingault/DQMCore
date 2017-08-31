@@ -181,7 +181,7 @@ public:
 	 *  Such a function should be used in DQMModule implementation by passing 'this' as first argument
 	 */
 	static StatusCode bookProfile1D(const DQMModule *const pModule, DQMMonitorElementPtr &monitorElement, const std::string &name, const std::string &title,
-			int nXBins, float xMin, float xMax, float yMin, float yMax);
+			int nXBins, float xMin, float xMax, float yMin, float yMax, Option_t* option="");
 
 	/** Book a 2D profile. The profile is encapsulated in the DQMMonitorElement
 	 *  and added to monitor element list of the module.
@@ -190,7 +190,7 @@ public:
 	static StatusCode bookProfile2D(const DQMModule *const pModule, DQMMonitorElementPtr &monitorElement, const std::string &name, const std::string &title,
 			int nXBins, float xMin, float xMax,
 			int nYBins, float yMin, float yMax,
-			float zMin, float zMax);
+			float zMin, float zMax, Option_t* option="");
 
 	/** Book an integer scalar element. The scalar is encapsulated in the DQMMonitorElement
 	 *  and added to monitor element list of the module.
@@ -294,7 +294,7 @@ public:
 	 *  Such a function should be used in DQMModule implementation
 	 */
 	static StatusCode bookProfile1D(const DQMModule *const pModule, DQMMonitorElementPtr &monitorElement, const std::string &directory, const std::string &name, const std::string &title,
-			int nXBins, float xMin, float xMax, float yMin, float yMax);
+			int nXBins, float xMin, float xMax, float yMin, float yMax, Option_t* option="");
 
 	/** Book a 2D profile. The profile is encapsulated in the DQMMonitorElement
 	 *  Such a function should be used in DQMModule implementation
@@ -302,7 +302,7 @@ public:
 	static StatusCode bookProfile2D(const DQMModule *const pModule, DQMMonitorElementPtr &monitorElement, const std::string &directory, const std::string &name, const std::string &title,
 			int nXBins, float xMin, float xMax,
 			int nYBins, float yMin, float yMax,
-			float zMin, float zMax);
+			float zMin, float zMax, Option_t* option="");
 
 	/** Book an integer scalar element. The scalar is encapsulated in the DQMMonitorElement
 	 *  Such a function should be used in DQMModule implementation
