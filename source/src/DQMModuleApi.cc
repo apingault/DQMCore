@@ -236,10 +236,10 @@ StatusCode DQMModuleApi::bookIntHistogram3D(const DQMModule *const pModule, DQMM
 //-------------------------------------------------------------------------------------------------
 
 StatusCode DQMModuleApi::bookProfile1D(const DQMModule *const pModule, DQMMonitorElementPtr &monitorElement, const std::string &name, const std::string &title,
-		int nXBins, float xMin, float xMax, float yMin, float yMax)
+		int nXBins, float xMin, float xMax, float yMin, float yMax, Option_t* option)
 {
 	RETURN_RESULT_IF(STATUS_CODE_SUCCESS, !=, pModule->getModuleApplication()->getMonitorElementManager()->bookHistogram(monitorElement,
-			PROFILE_1D_ELEMENT_TYPE, ".", name, title, pModule->getName(), TProfileAllocator(), nXBins, xMin, xMax, yMin, yMax));
+			PROFILE_1D_ELEMENT_TYPE, ".", name, title, pModule->getName(), TProfileAllocator(), nXBins, xMin, xMax, yMin, yMax, option ));
 
 	pModule->getModuleApplication()->getMonitorElementSender()->addAvailableMonitorElement(monitorElement);
 
@@ -251,10 +251,10 @@ StatusCode DQMModuleApi::bookProfile1D(const DQMModule *const pModule, DQMMonito
 StatusCode DQMModuleApi::bookProfile2D(const DQMModule *const pModule, DQMMonitorElementPtr &monitorElement, const std::string &name, const std::string &title,
 		int nXBins, float xMin, float xMax,
 		int nYBins, float yMin, float yMax,
-		float zMin, float zMax)
+		float zMin, float zMax, Option_t* option)
 {
 	RETURN_RESULT_IF(STATUS_CODE_SUCCESS, !=, pModule->getModuleApplication()->getMonitorElementManager()->bookHistogram(monitorElement,
-			PROFILE_2D_ELEMENT_TYPE, ".", name, title, pModule->getName(), TProfile2DAllocator(), nXBins, xMin, xMax, nYBins, yMin, yMax, zMin, zMax));
+			PROFILE_2D_ELEMENT_TYPE, ".", name, title, pModule->getName(), TProfile2DAllocator(), nXBins, xMin, xMax, nYBins, yMin, yMax, zMin, zMax, option));
 
 	pModule->getModuleApplication()->getMonitorElementSender()->addAvailableMonitorElement(monitorElement);
 
@@ -447,10 +447,10 @@ StatusCode DQMModuleApi::bookIntHistogram3D(const DQMModule *const pModule, DQMM
 //-------------------------------------------------------------------------------------------------
 
 StatusCode DQMModuleApi::bookProfile1D(const DQMModule *const pModule, DQMMonitorElementPtr &monitorElement, const std::string &dirName, const std::string &name, const std::string &title,
-		int nXBins, float xMin, float xMax, float yMin, float yMax)
+		int nXBins, float xMin, float xMax, float yMin, float yMax, Option_t* option)
 {
 	RETURN_RESULT_IF(STATUS_CODE_SUCCESS, !=, pModule->getModuleApplication()->getMonitorElementManager()->bookHistogram(monitorElement,
-			PROFILE_1D_ELEMENT_TYPE, dirName, name, title, pModule->getName(), TProfileAllocator(), nXBins, xMin, xMax, yMin, yMax));
+			PROFILE_1D_ELEMENT_TYPE, dirName, name, title, pModule->getName(), TProfileAllocator(), nXBins, xMin, xMax, yMin, yMax, option));
 
 	pModule->getModuleApplication()->getMonitorElementSender()->addAvailableMonitorElement(monitorElement);
 
@@ -462,10 +462,10 @@ StatusCode DQMModuleApi::bookProfile1D(const DQMModule *const pModule, DQMMonito
 StatusCode DQMModuleApi::bookProfile2D(const DQMModule *const pModule, DQMMonitorElementPtr &monitorElement, const std::string &dirName, const std::string &name, const std::string &title,
 		int nXBins, float xMin, float xMax,
 		int nYBins, float yMin, float yMax,
-		float zMin, float zMax)
+		float zMin, float zMax, Option_t* option)
 {
 	RETURN_RESULT_IF(STATUS_CODE_SUCCESS, !=, pModule->getModuleApplication()->getMonitorElementManager()->bookHistogram(monitorElement,
-			PROFILE_2D_ELEMENT_TYPE, dirName, name, title, pModule->getName(), TProfile2DAllocator(), nXBins, xMin, xMax, nYBins, yMin, yMax, zMin, zMax));
+			PROFILE_2D_ELEMENT_TYPE, dirName, name, title, pModule->getName(), TProfile2DAllocator(), nXBins, xMin, xMax, nYBins, yMin, yMax, zMin, zMax, option));
 
 	pModule->getModuleApplication()->getMonitorElementSender()->addAvailableMonitorElement(monitorElement);
 
