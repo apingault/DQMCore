@@ -39,7 +39,8 @@ DQMModuleApplication::DQMModuleApplication() :
 		m_pModule(NULL),
 		m_pMonitorElementManager(NULL),
 		m_pMonitorElementSender(NULL),
-		m_pAlertNotifier(NULL)
+		m_pAlertNotifier(NULL),
+		m_returnCode(STATUS_CODE_NOT_INITIALIZED)
 {
 	m_pMonitorElementManager = new DQMMonitorElementManager();
 	m_pMonitorElementSender = new DQMMonitorElementSender(this);

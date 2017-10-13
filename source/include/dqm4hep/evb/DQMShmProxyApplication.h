@@ -115,6 +115,8 @@ private:
 	void start(uint32_t run) {}
 	void stop() {}
 
+
+
 	/** Process a completed event.
 	 *
 	 * 	Do the following thing :
@@ -124,7 +126,11 @@ private:
 	 */
 	void processEvent(uint32_t key, std::vector<levbdim::buffer*> bufferList);
 
-private:
+	/**Implement empty virtual function from evb shmdriver
+	 */
+	void processRunHeader(std::vector<uint32_t> header);
+
+ private:
 	typedef std::vector< std::pair<std::string, DQMShmProcessor *> > DQMProcessorList;
 
 	DQMProcessorList                     m_processorList;

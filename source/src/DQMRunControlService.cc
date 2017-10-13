@@ -113,7 +113,11 @@ DQMRunControlService::~DQMRunControlService()
 	if(this->isRunning())
 	{
 		if(RUNNING_STATE == m_pRunControl->getRunState())
-			this->endCurrentRun();
+		try{
+				THROW_RESULT_IF(STATUS_CODE_SUCCESS, !=, this->endCurrentRun());
+		}catch(StatusCodeException &exception){
+			LOG4CXX_WARN( dqmMainLogger , "Failed to end current run with exception : " << exception.toString() );
+		}
 
 		this->stop();
 	}
@@ -427,7 +431,9 @@ void DQMRunControlService::mongooseStartOfRun(Mongoose::Request &request, Mongoo
 		if( iter->first == "run" )
 		{
 			int runNumber = 0;
-			DQM4HEP::stringToType( iter->second , runNumber );
+			if (!DQM4HEP::stringToType( iter->second , runNumber ))
+				LOG4CXX_WARN( dqmMainLogger , " mongooseStartOfRun Failed to query runNumber from POST" );
+		
 			pRun->setRunNumber( runNumber );
 			consistent = true;
 			continue;

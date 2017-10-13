@@ -71,7 +71,7 @@ FIND_PACKAGE( LOG4CXX REQUIRED )
 # ----- Find Mongoose package -----
 FIND_PACKAGE( Mongoose QUIET )
 
-IF( MONGOOSE_FOUND )
+IF( Mongoose_FOUND )
 	MESSAGE( STATUS "Check for Mongoose_INCLUDE_DIRS : ${Mongoose_INCLUDE_DIRS} -- ok" )
 	MESSAGE( STATUS "Check for Mongoose_LIBRARIES : ${Mongoose_LIBRARIES} -- ok" )
 	

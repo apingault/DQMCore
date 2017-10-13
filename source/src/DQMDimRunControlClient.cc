@@ -60,6 +60,7 @@ DQMDimRunControlClient::DQMDimRunControlClient() :
 		m_isConnected(false),
 		m_pStartOfRunInfo(NULL),
 		m_pEndOfRunInfo(NULL),
+		m_pCurrentRunRpcInfo(NULL),
 		m_pInBuffer(0)
 {
 	m_pOutBuffer = new xdrstream::BufferDevice( 10*1024 );

@@ -127,12 +127,12 @@ private:
 	DimInfo                 *m_pStartOfRunInfo;      ///< The dim start of run info
 	DimInfo                 *m_pEndOfRunInfo;        ///< The dim end of run info
 	DimRpcInfo              *m_pCurrentRunRpcInfo;   ///< The dim current run rpc info
-	DimRpcInfo              *m_pStartNewRunRpcInfo;  ///< The dim start new run rpc info
-	DimRpcInfo              *m_pEndRunRpcInfo;       ///< The dim end current run rpc info
+	// DimRpcInfo              *m_pStartNewRunRpcInfo;  ///< The dim start new run rpc info
+	// DimRpcInfo              *m_pEndRunRpcInfo;       ///< The dim end current run rpc info
 
 	friend class DQMCurrentRunRpcInfo;
-	friend class DQMStartNewRunRpcInfo;
-	friend class DQMEndCurrentRunRpcInfo;
+	// friend class DQMStartNewRunRpcInfo;
+	// friend class DQMEndCurrentRunRpcInfo;
 }; 
 
 } 

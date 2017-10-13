@@ -470,9 +470,13 @@ StatusCode DQMMonitorElementManager::bookMonitorElement(const TiXmlElement *cons
 
     	float minY, maxY;
     	RETURN_RESULT_IF(STATUS_CODE_SUCCESS, !=, DQMXmlHelper::getAttribute(pXmlElement, "minY", minY));
-    	RETURN_RESULT_IF(STATUS_CODE_SUCCESS, !=, DQMXmlHelper::getAttribute(pXmlElement, "maxY", maxX, BiggerThanValidator<float>(minY) ));
+    	RETURN_RESULT_IF(STATUS_CODE_SUCCESS, !=, DQMXmlHelper::getAttribute(pXmlElement, "maxY", maxY, BiggerThanValidator<float>(minY) ));
 
-    	RETURN_RESULT_IF(STATUS_CODE_SUCCESS, !=, this->bookHistogram(monitorElement, PROFILE_1D_ELEMENT_TYPE, path, name, title, moduleName, TProfileAllocator(), nBinsX, minX, maxX, minY, maxY));
+			// Not Mandatory
+			std::string option="";
+			RETURN_RESULT_IF_AND_IF(STATUS_CODE_SUCCESS, STATUS_CODE_NOT_FOUND, !=, DQMXmlHelper::getAttribute(pXmlElement, "option", option));
+
+    	RETURN_RESULT_IF(STATUS_CODE_SUCCESS, !=, this->bookHistogram(monitorElement, PROFILE_1D_ELEMENT_TYPE, path, name, title, moduleName, TProfileAllocator(), nBinsX, minX, maxX, minY, maxY, option.c_str()));
 
     	break;
 	}
@@ -494,7 +498,11 @@ StatusCode DQMMonitorElementManager::bookMonitorElement(const TiXmlElement *cons
     	RETURN_RESULT_IF(STATUS_CODE_SUCCESS, !=, DQMXmlHelper::getAttribute(pXmlElement, "minZ", minZ));
     	RETURN_RESULT_IF(STATUS_CODE_SUCCESS, !=, DQMXmlHelper::getAttribute(pXmlElement, "maxZ", maxZ, BiggerThanValidator<float>(minZ) ));
 
-    	RETURN_RESULT_IF(STATUS_CODE_SUCCESS, !=, this->bookHistogram(monitorElement, PROFILE_2D_ELEMENT_TYPE, path, name, title, moduleName, TProfile2DAllocator(), nBinsX, minX, maxX, nBinsY, minY, maxY, minZ, maxZ));
+			// Not Mandatory
+			std::string option="";
+			RETURN_RESULT_IF_AND_IF(STATUS_CODE_SUCCESS, STATUS_CODE_NOT_FOUND, !=, DQMXmlHelper::getAttribute(pXmlElement, "option", option));
+
+    	RETURN_RESULT_IF(STATUS_CODE_SUCCESS, !=, this->bookHistogram(monitorElement, PROFILE_2D_ELEMENT_TYPE, path, name, title, moduleName, TProfile2DAllocator(), nBinsX, minX, maxX, nBinsY, minY, maxY, minZ, maxZ, option.c_str()));
 
     	break;
 	}
@@ -791,9 +799,13 @@ StatusCode DQMMonitorElementManager::bookMonitorElement(const TiXmlElement *cons
 
     	float minY, maxY;
     	RETURN_RESULT_IF(STATUS_CODE_SUCCESS, !=, DQMXmlHelper::getAttribute(pXmlElement, "minY", minY));
-    	RETURN_RESULT_IF(STATUS_CODE_SUCCESS, !=, DQMXmlHelper::getAttribute(pXmlElement, "maxY", maxX, BiggerThanValidator<float>(minY) ));
+    	RETURN_RESULT_IF(STATUS_CODE_SUCCESS, !=, DQMXmlHelper::getAttribute(pXmlElement, "maxY", maxY, BiggerThanValidator<float>(minY) ));
 
-    	RETURN_RESULT_IF(STATUS_CODE_SUCCESS, !=, this->bookHistogram(monitorElement, PROFILE_1D_ELEMENT_TYPE, path, name, title, moduleName, TProfileAllocator(), nBinsX, minX, maxX, minY, maxY));
+			// Not Mandatory
+			std::string option="";
+			RETURN_RESULT_IF_AND_IF(STATUS_CODE_SUCCESS, STATUS_CODE_NOT_FOUND, !=, DQMXmlHelper::getAttribute(pXmlElement, "option", option));
+		
+			RETURN_RESULT_IF(STATUS_CODE_SUCCESS, !=, this->bookHistogram(monitorElement, PROFILE_1D_ELEMENT_TYPE, path, name, title, moduleName, TProfileAllocator(), nBinsX, minX, maxX, minY, maxY, option.c_str()));
 
     	break;
 	}
@@ -815,7 +827,11 @@ StatusCode DQMMonitorElementManager::bookMonitorElement(const TiXmlElement *cons
     	RETURN_RESULT_IF(STATUS_CODE_SUCCESS, !=, DQMXmlHelper::getAttribute(pXmlElement, "minZ", minZ));
     	RETURN_RESULT_IF(STATUS_CODE_SUCCESS, !=, DQMXmlHelper::getAttribute(pXmlElement, "maxZ", maxZ, BiggerThanValidator<float>(minZ) ));
 
-    	RETURN_RESULT_IF(STATUS_CODE_SUCCESS, !=, this->bookHistogram(monitorElement, PROFILE_2D_ELEMENT_TYPE, path, name, title, moduleName, TProfile2DAllocator(), nBinsX, minX, maxX, nBinsY, minY, maxY, minZ, maxZ));
+			// Not Mandatory
+			std::string option="";
+			RETURN_RESULT_IF_AND_IF(STATUS_CODE_SUCCESS, STATUS_CODE_NOT_FOUND, !=, DQMXmlHelper::getAttribute(pXmlElement, "option", option));
+
+    	RETURN_RESULT_IF(STATUS_CODE_SUCCESS, !=, this->bookHistogram(monitorElement, PROFILE_2D_ELEMENT_TYPE, path, name, title, moduleName, TProfile2DAllocator(), nBinsX, minX, maxX, nBinsY, minY, maxY, minZ, maxZ, option.c_str()));
 
     	break;
 	}

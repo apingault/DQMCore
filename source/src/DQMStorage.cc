@@ -45,8 +45,12 @@ DQMStorage::DQMStorage()
 
 DQMStorage::~DQMStorage()
 {
-	clear();
-
+	try{
+		clear();
+	}catch(StatusCodeException &exception){
+		LOG4CXX_WARN( dqmMainLogger , "Failed to clear storage with exception : " << exception.toString() );
+	}
+	
 	delete m_pRootDir;
 	m_pCurrentDir = NULL;
 }
