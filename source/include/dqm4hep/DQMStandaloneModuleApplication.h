@@ -109,8 +109,8 @@ private:
 	void onCycleStopped(const DQMCycle *const pCycle);
 
 private:
-	bool                          m_stopFlag;
-	bool                          m_isInitialized;
+	// bool                          m_stopFlag;
+	// bool                          m_isInitialized;
 
 	// the cycle to process
 	DQMTimerCycle                *m_pTimerCycle;

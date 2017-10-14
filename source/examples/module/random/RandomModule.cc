@@ -105,7 +105,7 @@ DQM_PLUGIN_DECL( RandomModule ,  "RandomModule" )
 //-------------------------------------------------------------------------------------------------
 
 RandomModule::RandomModule()
- : DQMAnalysisModule()
+ : DQMAnalysisModule(),m_histoXMin(0),m_histoXMax(0)
 {
 	setDetectorName("random module detector");
 	setVersion(1, 0, 0);

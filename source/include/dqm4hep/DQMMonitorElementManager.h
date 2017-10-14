@@ -75,8 +75,8 @@ typedef allocator_helper<TObject, TH2S, const char*, const char *, int, float, f
 typedef allocator_helper<TObject, TH3F, const char*, const char *, int, float, float, int, float, float, int, float, float> TH3FAllocator;
 typedef allocator_helper<TObject, TH3I, const char*, const char *, int, float, float, int, float, float, int, float, float> TH3IAllocator;
 
-typedef allocator_helper<TObject, TProfile, const char*, const char *, int, float, float, float, float> TProfileAllocator;
-typedef allocator_helper<TObject, TProfile2D, const char*, const char *, int, float, float, int, float, float, float, float> TProfile2DAllocator;
+typedef allocator_helper<TObject, TProfile, const char*, const char *, int, float, float, float, float, Option_t*> TProfileAllocator;
+typedef allocator_helper<TObject, TProfile2D, const char*, const char *, int, float, float, int, float, float, float, float, Option_t*> TProfile2DAllocator;
 
 typedef allocator_helper<TObject, TScalarInt, int> TScalarIntAllocator;
 typedef allocator_helper<TObject, TScalarFloat, float> TScalarFloatAllocator;

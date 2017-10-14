@@ -51,7 +51,7 @@ DQM_PLUGIN_DECL( StandaloneRandomModule , "StandaloneRandomModule" )
 //-------------------------------------------------------------------------------------------------
 
 StandaloneRandomModule::StandaloneRandomModule()
- : DQMStandaloneModule()
+ : DQMStandaloneModule(),m_min(0),m_max(0)
 {
 	setVersion(1, 0, 0);
 }

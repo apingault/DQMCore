@@ -9,9 +9,9 @@ CMAKE_MINIMUM_REQUIRED( VERSION 2.6 FATAL_ERROR )
 # project name
 PROJECT( DQMCore )
 
-SET( ${PROJECT_NAME}_VERSION_MAJOR 2 )
-SET( ${PROJECT_NAME}_VERSION_MINOR 3 )
-SET( ${PROJECT_NAME}_VERSION_PATCH 0 )
+SET( ${PROJECT_NAME}_VERSION_MAJOR 1 )
+SET( ${PROJECT_NAME}_VERSION_MINOR 2 )
+SET( ${PROJECT_NAME}_VERSION_PATCH 4 )
 
 ###############################
 # Require C++11
@@ -71,7 +71,7 @@ FIND_PACKAGE( LOG4CXX REQUIRED )
 # ----- Find Mongoose package -----
 FIND_PACKAGE( Mongoose QUIET )
 
-IF( MONGOOSE_FOUND )
+IF( Mongoose_FOUND )
 	MESSAGE( STATUS "Check for Mongoose_INCLUDE_DIRS : ${Mongoose_INCLUDE_DIRS} -- ok" )
 	MESSAGE( STATUS "Check for Mongoose_LIBRARIES : ${Mongoose_LIBRARIES} -- ok" )
 	

@@ -36,7 +36,9 @@ DQMCycle::DQMCycle() :
 		m_processingRate(0.f),
 		m_cycleValue(0.f),
 		m_cycleTimeout(10), // 10 seconds is the default value
-		m_nProcessedEvents(0)
+		m_nProcessedEvents(0),
+		m_state(STOPPED_STATE)
+
 {
 	/* nop */
 }
