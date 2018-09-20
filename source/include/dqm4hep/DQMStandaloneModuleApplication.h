@@ -104,7 +104,7 @@ public:
 
 private:
 	// from cycle listener
-	void onEventProcessed(const DQMCycle *const pCycle, const DQMEvent *const pEvent) { /* nop */ }
+	void onEventProcessed(const DQMCycle *const /*pCycle*/, const DQMEvent *const /*pEvent*/) { /* nop */ }
 	void onCycleStarted(const DQMCycle *const pCycle);
 	void onCycleStopped(const DQMCycle *const pCycle);
 
@@ -123,8 +123,6 @@ private:
 	std::string                   m_name;
 	std::string                   m_type;
 	std::string                   m_moduleLogStr;
-
-	StatusCode                    m_returnStatusCode;
 }; 
 
 } 

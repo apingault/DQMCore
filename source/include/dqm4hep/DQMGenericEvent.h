@@ -253,7 +253,7 @@ public:
 //-------------------------------------------------------------------------------------------------
 
 template <typename T>
-StatusCode DQMGenericEvent::setValues(const std::string &key, const T &vals)
+StatusCode DQMGenericEvent::setValues(const std::string &/*key*/, const T &/*vals*/)
 {
 	return STATUS_CODE_FAILURE;
 }
@@ -261,7 +261,7 @@ StatusCode DQMGenericEvent::setValues(const std::string &key, const T &vals)
 //-------------------------------------------------------------------------------------------------
 
 template <typename T>
-StatusCode DQMGenericEvent::getValues(const std::string &key, T &vals) const
+StatusCode DQMGenericEvent::getValues(const std::string &/*key*/, T &/*vals*/) const
 {
 	return STATUS_CODE_FAILURE;
 }

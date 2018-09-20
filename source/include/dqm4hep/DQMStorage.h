@@ -163,8 +163,8 @@ private:
 
 	DQMDirectory                *m_pCurrentDir;
 	DQMDirectory                *m_pRootDir;
-	bool                        m_isOwner;
-}; 
+//    bool                        m_isOwner;
+};
 
 } 
 

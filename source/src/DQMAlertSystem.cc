@@ -431,14 +431,14 @@ DQMDimAlertInterface::~DQMDimAlertInterface()
 
 //-------------------------------------------------------------------------------------------------
 
-void DQMDimAlertInterface::newEmitterRegistered(const std::string &emitter)
+void DQMDimAlertInterface::newEmitterRegistered(const std::string &/*emitter*/)
 {
 	/* nop */
 }
 
 //-------------------------------------------------------------------------------------------------
 
-void DQMDimAlertInterface::emitterUnregistered(const std::string &emitter)
+void DQMDimAlertInterface::emitterUnregistered(const std::string &/*emitter*/)
 {
 	/* nop */
 }

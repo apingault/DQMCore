@@ -201,15 +201,15 @@ StatusCode DQMXmlHelper::replaceAllXmlAttributes(TiXmlElement *pXmlElement, cons
 					bool found = false;
 					std::string parameterName( xmlElementNames.at(e+1) );
 
-				    for (TiXmlElement *pXmlElement = pCurrentElement->FirstChildElement("parameter"); NULL != pXmlElement;
-				        pXmlElement = pXmlElement->NextSiblingElement("parameter"))
+				    for (TiXmlElement *pXmlEltParam = pCurrentElement->FirstChildElement("parameter"); NULL != pXmlEltParam;
+				        pXmlEltParam = pXmlEltParam->NextSiblingElement("parameter"))
 				    {
 				    	std::string name;
-				    	RETURN_RESULT_IF(STATUS_CODE_SUCCESS, !=, DQMXmlHelper::getAttribute(pXmlElement, "name", name));
+				    	RETURN_RESULT_IF(STATUS_CODE_SUCCESS, !=, DQMXmlHelper::getAttribute(pXmlEltParam, "name", name));
 
 				    	if( name == parameterName )
 				    	{
-				    		pCurrentElement = pXmlElement;
+				    		pCurrentElement = pXmlEltParam;
 				    		found = true;
 				    		break;
 				    	}

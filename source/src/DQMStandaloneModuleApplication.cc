@@ -55,8 +55,7 @@ DQMStandaloneModuleApplication::DQMStandaloneModuleApplication() :
 		m_pTimerCycle(NULL),
 		m_type("StandaloneModule"),
 		m_name("Unknown"),
-		m_moduleLogStr("[Standalone Module]"),
-		m_returnStatusCode(STATUS_CODE_SUCCESS)
+		m_moduleLogStr("[Standalone Module]")
 {
 	m_pArchiver = new DQMArchiver();
 }
@@ -116,12 +115,12 @@ StatusCode DQMStandaloneModuleApplication::readSettings( const std::string &sett
 	if(!pFileHandler)
 		return STATUS_CODE_FAILURE;
 
-	StatusCode statusCode = pFileHandler->download(filePattern);
+	StatusCode statCode = pFileHandler->download(filePattern);
 
-	if(statusCode != STATUS_CODE_SUCCESS)
+	if(statCode != STATUS_CODE_SUCCESS)
 	{
 		delete pFileHandler;
-		return statusCode;
+		return statCode;
 	}
 
 	m_settings.m_settingsFileName = pFileHandler->getLocalFileName();
@@ -217,10 +216,10 @@ StatusCode DQMStandaloneModuleApplication::readSettings( const std::string &sett
 	{
 		LOG4CXX_INFO( dqmMainLogger , m_moduleLogStr << ", Configuring archiver ..." );
 
-		const TiXmlElement *const pXmlElement = xmlHandle.FirstChildElement("archiver").Element();
+		const TiXmlElement *const pXmlElementArchiver = xmlHandle.FirstChildElement("archiver").Element();
 
-		THROW_RESULT_IF(STATUS_CODE_SUCCESS, !=, DQMXmlHelper::getAttribute(pXmlElement, "open", m_settings.m_openArchive));
-		THROW_RESULT_IF(STATUS_CODE_SUCCESS, !=, DQMXmlHelper::getAttribute(pXmlElement, "directory", m_settings.m_archiveDirectory));
+		THROW_RESULT_IF(STATUS_CODE_SUCCESS, !=, DQMXmlHelper::getAttribute(pXmlElementArchiver, "open", m_settings.m_openArchive));
+		THROW_RESULT_IF(STATUS_CODE_SUCCESS, !=, DQMXmlHelper::getAttribute(pXmlElementArchiver, "directory", m_settings.m_archiveDirectory));
 
 		LOG4CXX_INFO( dqmMainLogger , m_moduleLogStr << ", Configuring archiver ... OK" );
 	}
@@ -278,7 +277,7 @@ StatusCode DQMStandaloneModuleApplication::run()
 	if(!this->isInitialized())
 		return STATUS_CODE_NOT_INITIALIZED;
 
-	bool callStartOfCycle = true;
+	// bool callStartOfCycle = true;
 
 	// get casted module for easier manipulation
 	DQMStandaloneModule *pStandaloneModule = dynamic_cast<DQMStandaloneModule *>(this->getModule());

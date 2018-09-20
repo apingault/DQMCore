@@ -362,6 +362,7 @@ void DQMDimEventCollector::commandHandler()
 		if(registerClient)
 		{
 			Client &client = getClient(clientId);
+			(void)client;
 			LOG4CXX_INFO( dqmMainLogger , "Client " << clientId << " added to server !" );
 
 			int clientIds[2];

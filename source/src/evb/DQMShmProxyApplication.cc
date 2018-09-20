@@ -505,7 +505,7 @@ void DQMShmProxyApplication::processEvent(uint32_t key, std::vector<levbdim::buf
 	delete pEvent;
 }
 
-void DQMShmProxyApplication::processRunHeader(std::vector<uint32_t> header)
+void DQMShmProxyApplication::processRunHeader(std::vector<uint32_t> /*header*/)
 {
   /*Nope*/
 }

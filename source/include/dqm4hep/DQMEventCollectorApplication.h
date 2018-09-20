@@ -87,7 +87,7 @@ class DQMEventCollectorApplication : public DQMApplication
 protected:
 	/** No settings to read
 	 */
-	StatusCode readSettings(const std::string &settingsFile = "") { return STATUS_CODE_SUCCESS; }
+	StatusCode readSettings(const std::string &/*settingsFile*/) { return STATUS_CODE_SUCCESS; }
 
 	bool                              m_shouldExit;
 	std::string                        m_type;

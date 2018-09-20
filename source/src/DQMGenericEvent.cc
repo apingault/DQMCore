@@ -369,6 +369,7 @@ StatusCode DQMGenericEventStreamer::read(DQMEvent *&pEvent, xdrstream::IODevice 
 
 StatusCode DQMGenericEventStreamer::write(const DQMEvent *const pEvent, const std::string &subEventIdentifier, xdrstream::IODevice *pDevice)
 {
+	(void)subEventIdentifier;
 	return this->write(pEvent, pDevice);
 }
 

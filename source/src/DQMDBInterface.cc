@@ -251,14 +251,14 @@ StatusCode DQMDBInterface::queryConfigFileContent(const std::string &configFileN
 	query << "SELECT CONTENTS FROM CONFIG_FILES WHERE FILE_NAME=\"" << configFileName << "\" ;";
 
 	void *pFileContent = NULL;
-	StatusCode statusCode = this->queryRaw(query.str(), pFileContent);
+	StatusCode statCode = this->queryRaw(query.str(), pFileContent);
 
-	if(statusCode != STATUS_CODE_SUCCESS)
+	if(statCode != STATUS_CODE_SUCCESS)
 	{
 		// select again the current database
 		RETURN_RESULT_IF(STATUS_CODE_SUCCESS, !=, this->execute(queryUse));
 
-		return statusCode;
+		return statCode;
 	}
 
 	fileContents = (char *) pFileContent;
@@ -289,14 +289,14 @@ StatusCode DQMDBInterface::queryConfigFileDescription(const std::string &configF
 	query << "SELECT DESCRIPTION FROM CONFIG_FILES WHERE FILE_NAME=\"" << configFileName << "\" ;";
 
 	void *pFileDescription = NULL;
-	StatusCode statusCode = this->queryRaw(query.str(), pFileDescription);
+	StatusCode statCode = this->queryRaw(query.str(), pFileDescription);
 
-	if(statusCode != STATUS_CODE_SUCCESS)
+	if(statCode != STATUS_CODE_SUCCESS)
 	{
 		// select again the current database
 		RETURN_RESULT_IF(STATUS_CODE_SUCCESS, !=, this->execute(queryUse));
 
-		return statusCode;
+		return statCode;
 	}
 
 	fileDescription = (char *) pFileDescription;
@@ -358,14 +358,14 @@ StatusCode DQMDBInterface::insertConfigFile(const std::string &localFileName, co
 	if(m_database != "DQM4HEP")
 		RETURN_RESULT_IF(STATUS_CODE_SUCCESS, !=, this->execute("USE DQM4HEP ;"));
 
-	StatusCode statusCode = this->execute(query.str());
+	StatusCode statCode = this->execute(query.str());
 
-	if(STATUS_CODE_SUCCESS != statusCode)
+	if(STATUS_CODE_SUCCESS != statCode)
 	{
 		// select again the current database
 		RETURN_RESULT_IF(STATUS_CODE_SUCCESS, !=, this->execute(queryUse));
 
-		return statusCode;
+		return statCode;
 	}
 
 	// select again the current database

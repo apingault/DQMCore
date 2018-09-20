@@ -147,7 +147,7 @@ StatusCode DQMArchiver::close()
 
 //-------------------------------------------------------------------------------------------------
 
-StatusCode DQMArchiver::archive(DQMModule *pModule, bool archiveAll)
+StatusCode DQMArchiver::archive(DQMModule *pModule, bool /*archiveAll*/)
 {
 	if(!isOpened())
 		return STATUS_CODE_NOT_INITIALIZED;

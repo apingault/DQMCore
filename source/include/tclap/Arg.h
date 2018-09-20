@@ -38,6 +38,12 @@
 #include <iomanip>
 #include <cstdio>
 
+// save diagnostic state
+#pragma GCC diagnostic push
+
+// turn off the specific warning. Can also use "-Wall"
+#pragma GCC diagnostic ignored "-Wshadow"
+
 #if defined(HAVE_SSTREAM)
 #include <sstream>
 typedef std::istringstream istringstream;
@@ -47,6 +53,9 @@ typedef std::istrstream istringstream;
 #else
 #error "Need a stringstream (sstream or strstream) to compile!"
 #endif
+
+// turn the warnings back on
+#pragma GCC diagnostic pop
 
 #include <tclap/ArgException.h>
 #include <tclap/Visitor.h>

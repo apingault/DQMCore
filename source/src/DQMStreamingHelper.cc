@@ -63,7 +63,7 @@ xdrstream::Status DQMStreamingHelper::read( xdrstream::IODevice *pDevice, DQMPub
 		DQMPublication::value_type value(moduleName, DQMMonitorElementPtrList());
 		DQMPublication::iterator iter = publication.insert(value).first;
 
-		for(unsigned int i=0 ; i<meListSize ; i++)
+		for(unsigned int j=0 ; j<meListSize ; j++)
 		{
 			DQMMonitorElementPtr monitorElement = std::make_shared<DQMMonitorElement>();
 

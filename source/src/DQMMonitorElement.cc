@@ -671,7 +671,7 @@ void TDynamicGraph::Draw(Option_t *option)
 
 		Double_t lastX, lastY;
 		Int_t res = this->GetPoint( nPoints-1 , lastX, lastY );
-
+		(void)res;
 		this->GetXaxis()->SetRangeUser( lastX - m_rangeLength , lastX );
 
 		if(gPad)

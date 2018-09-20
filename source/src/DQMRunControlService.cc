@@ -117,7 +117,10 @@ DQMRunControlService::~DQMRunControlService()
 				THROW_RESULT_IF(STATUS_CODE_SUCCESS, !=, this->endCurrentRun());
 		}catch(StatusCodeException &exception){
 			LOG4CXX_WARN( dqmMainLogger , "Failed to end current run with exception : " << exception.toString() );
+		}catch(...){
+			LOG4CXX_WARN( dqmMainLogger , "Failed to end current run with unknown exception");
 		}
+
 
 		this->stop();
 	}
@@ -348,7 +351,7 @@ void DQMRunControlService::setup()
 
 //-------------------------------------------------------------------------------------------------
 
-void DQMRunControlService::mongooseStartOfRunGetForm(Mongoose::Request &request, Mongoose::StreamResponse &response)
+void DQMRunControlService::mongooseStartOfRunGetForm(Mongoose::Request &/*request*/, Mongoose::StreamResponse &response)
 {
 	LOG4CXX_DEBUG( dqmMainLogger , "Received GET: /" + m_pRunControl->getRunControlName() + "/SOR" );
 
@@ -381,7 +384,7 @@ void DQMRunControlService::mongooseStartOfRunGetForm(Mongoose::Request &request,
 
 //-------------------------------------------------------------------------------------------------
 
-void DQMRunControlService::mongooseEndCurrentRunGetForm(Mongoose::Request &request, Mongoose::StreamResponse &response)
+void DQMRunControlService::mongooseEndCurrentRunGetForm(Mongoose::Request &/*request*/, Mongoose::StreamResponse &response)
 {
 	LOG4CXX_DEBUG( dqmMainLogger , "Received GET: /" + m_pRunControl->getRunControlName() + "/EOR" );
 
@@ -499,7 +502,7 @@ void DQMRunControlService::mongooseEndOfRun(Mongoose::Request &request, Mongoose
 	std::string password;
 	DQMRun *pRun = this->getCurrentRun();
 	int runNumber = pRun->getRunNumber();
-
+	(void)runNumber;
 	for(auto iter = variables.begin(), endIter = variables.end() ; endIter != iter ; ++iter)
 	{
 		if( iter->first == "password" )
@@ -527,7 +530,7 @@ void DQMRunControlService::mongooseEndOfRun(Mongoose::Request &request, Mongoose
 
 //-------------------------------------------------------------------------------------------------
 
-void DQMRunControlService::mongooseRunStatus(Mongoose::Request &request, Mongoose::StreamResponse &response)
+void DQMRunControlService::mongooseRunStatus(Mongoose::Request &/*request*/, Mongoose::StreamResponse &response)
 {
 	LOG4CXX_DEBUG( dqmMainLogger , "Received GET: /" + m_pRunControl->getRunControlName() + "/STATUS" );
 

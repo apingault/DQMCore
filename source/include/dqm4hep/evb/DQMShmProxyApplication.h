@@ -112,7 +112,7 @@ private:
 
 private:
 	// from shm processor
-	void start(uint32_t run) {}
+	void start(uint32_t /*run*/) {}
 	void stop() {}
 
 

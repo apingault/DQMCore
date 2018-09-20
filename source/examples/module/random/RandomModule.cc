@@ -93,7 +93,7 @@ public:
 		return STATUS_CODE_SUCCESS;
 	}
 
-	bool canRun(DQMMonitorElement *pMonitorElement) const
+	bool canRun(DQMMonitorElement */*pMonitorElement*/) const
 	{
 		return true;
 	}

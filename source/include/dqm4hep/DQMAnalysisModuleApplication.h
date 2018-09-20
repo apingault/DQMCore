@@ -145,7 +145,7 @@ private:
 	int getCurrentRunNumber() const;
 
 	// from cycle listener
-	void onEventProcessed(const DQMCycle *const pCycle, const DQMEvent *const pEvent) { /* nop */ }
+	void onEventProcessed(const DQMCycle *const /*pCycle*/, const DQMEvent *const /*pEvent*/) { /* nop */ }
 	void onCycleStarted(const DQMCycle *const pCycle);
 	void onCycleStopped(const DQMCycle *const pCycle);
 

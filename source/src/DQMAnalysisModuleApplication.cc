@@ -117,12 +117,12 @@ StatusCode DQMAnalysisModuleApplication::readSettings(const std::string &setting
 	if(!pFileHandler)
 		return STATUS_CODE_FAILURE;
 
-	StatusCode statusCode = pFileHandler->download(filePattern);
+	StatusCode statCode = pFileHandler->download(filePattern);
 
-	if(statusCode != STATUS_CODE_SUCCESS)
+	if(statCode != STATUS_CODE_SUCCESS)
 	{
 		delete pFileHandler;
-		return statusCode;
+		return statCode;
 	}
 
 	std::string localSettingsFile = pFileHandler->getLocalFileName();
@@ -283,7 +283,8 @@ StatusCode DQMAnalysisModuleApplication::run()
 
 				try
 				{
-					StatusCode statusCode = pAnalysisModule->processEvent(event.get());
+					StatusCode statCode = pAnalysisModule->processEvent(event.get());
+					(void)statCode;
 					m_pCycle->eventProcessed(event.get());
 				}
 				catch(StatusCodeException &exception)

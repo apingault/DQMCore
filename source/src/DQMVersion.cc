@@ -43,7 +43,7 @@ DQMVersion::DQMVersion() :
 
 DQMVersion::DQMVersion( unsigned int major, unsigned int minor, unsigned int patch )
 {
-	set( m_major, m_minor, m_patch );
+	set( major, minor, patch );
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -169,7 +169,7 @@ bool operator != ( const DQMVersion &lhs, const DQMVersion &rhs )
 //-------------------------------------------------------------------------------------------------
 
 xdrstream::Status DQMVersion::stream(xdrstream::StreamingMode mode, xdrstream::IODevice *pDevice,
-		xdrstream::xdr_version_t version)
+		xdrstream::xdr_version_t /*version*/)
 {
 	if( xdrstream::XDR_READ_STREAM == mode )
 	{

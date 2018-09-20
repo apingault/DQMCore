@@ -70,7 +70,7 @@ DQMQualityTestResult &DQMQualityTestResult::operator=(const DQMQualityTestResult
 //-------------------------------------------------------------------------------------------------
 
 xdrstream::Status DQMQualityTestResult::stream(xdrstream::StreamingMode mode, xdrstream::IODevice *pDevice,
-		xdrstream::xdr_version_t version)
+		xdrstream::xdr_version_t /*version*/)
 {
 	if( xdrstream::XDR_READ_STREAM == mode )
 	{

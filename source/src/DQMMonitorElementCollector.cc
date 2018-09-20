@@ -678,7 +678,7 @@ void DQMMonitorElementCollector::handleMeCollectUpdate(DimCommand *pCommand)
 					meEndIter != meIter ; ++meIter)
 			{
 				bool updated = findIter->second->updateMonitorElement(*meIter);
-
+				(void)updated;
 				nElements++;
 
 				(*meIter)->setCollectorName(this->getCollectorName());
